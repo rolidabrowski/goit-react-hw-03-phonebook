@@ -1,0 +1,29 @@
+.form {
+  width: 300px;
+  padding: 15px;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  color: #000;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
