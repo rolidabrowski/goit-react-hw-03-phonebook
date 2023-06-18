@@ -7,12 +7,7 @@ import { nanoid } from 'nanoid';
 
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
 
@@ -48,6 +43,7 @@ export class App extends Component {
       return;
     }
     contacts.push(contact);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
   };
 
   showContacts = () => {
@@ -66,7 +62,23 @@ export class App extends Component {
         ),
       };
     });
+    this.removeToLocalStorage(contactId);
   };
+
+  removeToLocalStorage(contactId) {
+    const { contacts } = this.state;
+    let index = contacts.findIndex(item => item.id === contactId);
+    contacts.splice(index, 1);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }
+
+  componentDidMount() {
+    const contactsFromLocalStorage = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contactsFromLocalStorage);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
 
   render() {
     const { filter } = this.state;
