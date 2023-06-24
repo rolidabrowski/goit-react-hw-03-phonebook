@@ -20,7 +20,6 @@ export class App extends Component {
     event.preventDefault();
     const form = event.currentTarget;
     const { contacts } = this.state;
-    this.props.onSubmit({ ...contacts });
     this.setState({ ...contacts });
     this.saveContact();
     form.reset();
