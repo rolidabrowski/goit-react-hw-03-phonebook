@@ -11,30 +11,14 @@ export class App extends Component {
     filter: '',
   };
 
-  handleChange = event => {
-    const { name, value } = event.currentTarget;
-    this.setState({ [name]: value });
-  };
-
   handleSubmit = event => {
     event.preventDefault();
     const form = event.currentTarget;
     const { contacts } = this.state;
-    this.setState({ ...contacts });
-    this.saveContact();
-    form.reset();
-  };
-
-  handleSearch = event => {
-    this.setState({ filter: event.currentTarget.value.toLowerCase() });
-  };
-
-  saveContact = () => {
-    const { contacts } = this.state;
     const contact = {
       id: nanoid(),
-      name: this.state.name,
-      number: this.state.number,
+      name: form.elements.name.value,
+      number: form.elements.number.value,
     };
 
     if (contacts.find(item => item.name === contact.name)) {
@@ -42,7 +26,13 @@ export class App extends Component {
       return;
     }
     contacts.push(contact);
+    this.setState({ ...contacts });
     localStorage.setItem('contacts', JSON.stringify(contacts));
+    form.reset();
+  };
+
+  handleSearch = event => {
+    this.setState({ filter: event.currentTarget.value.toLowerCase() });
   };
 
   showContacts = () => {
@@ -81,17 +71,13 @@ export class App extends Component {
 
   render() {
     const { filter } = this.state;
-    const visibleContacts = this.showContacts();
     return (
       <div>
         <h1 className={css.title}>Phonebook</h1>
-        <ContactForm
-          onSubmit={this.handleSubmit}
-          onChange={this.handleChange}
-        />
+        <ContactForm onSubmit={this.handleSubmit} />
         <h2 className={css.title}>Contacts</h2>
         <Filter value={filter} onChange={this.handleSearch} />
-        <ContactList contacts={visibleContacts} onRemove={this.onRemove} />
+        <ContactList contacts={this.showContacts()} onRemove={this.onRemove} />
       </div>
     );
   }

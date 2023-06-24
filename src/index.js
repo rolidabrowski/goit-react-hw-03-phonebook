@@ -5,6 +5,6 @@ import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App onSubmit={values => console.log(values)} />
+    <App />
   </React.StrictMode>
 );
